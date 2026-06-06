@@ -16,10 +16,10 @@ pref_beta: 0.1
 pref_loss: sigmoid
 
 ### dataset
-dataset: qwen2_5_vl_dpo_local_1000
+dataset: qwen2_5_vl_dpo
 template: qwen2_vl
 cutoff_len: 1536
-max_samples: 1000
+max_samples: 10000
 overwrite_cache: true
 preprocessing_num_workers: 4
 

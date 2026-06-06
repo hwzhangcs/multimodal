@@ -16,7 +16,7 @@ pref_beta: 0.1
 pref_loss: sigmoid
 
 ### dataset
-dataset: qwen2_5_vl_dpo_full
+dataset: qwen2_5_vl_dpo
 template: qwen2_vl
 cutoff_len: 2048
 max_samples: 10000

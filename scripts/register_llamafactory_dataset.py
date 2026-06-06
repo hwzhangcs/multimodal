@@ -21,8 +21,8 @@ DEFAULT_COLUMNS = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Merge a DPO dataset entry into LLaMA-Factory data/dataset_info.json.")
     parser.add_argument("--llamafactory-dir", default="LlamaFactory", help="Path to the LLaMA-Factory checkout.")
-    parser.add_argument("--dataset-name", default="qwen2_5_vl_dpo_local_1000", help="LLaMA-Factory dataset registry key.")
-    parser.add_argument("--dataset-file", default="qwen2_5_vl_dpo_local_1000.json", help="Dataset JSON file name under LLaMA-Factory/data.")
+    parser.add_argument("--dataset-name", default="qwen2_5_vl_dpo", help="LLaMA-Factory dataset registry key.")
+    parser.add_argument("--dataset-file", default="qwen2_5_vl_dpo.json", help="Dataset JSON file name under LLaMA-Factory/data.")
     parser.add_argument("--source-json", default=None, help="Optional generated dataset to copy into LLaMA-Factory/data/.")
     parser.add_argument("--image-source", default="images", help="Repository image directory to link into LLaMA-Factory when --link-images is set.")
     parser.add_argument("--link-images", action="store_true", help="Create LLaMA-Factory/images as a symlink to --image-source if it does not already exist.")

@@ -13,10 +13,10 @@ This calls `scripts/register_llamafactory_dataset.py` and merges the dataset ent
 For review, the committed registration snippet is:
 
 ```bash
-configs/llamafactory/dataset_info.qwen2_5_vl_dpo_local_1000.json
+configs/llamafactory/dataset_info.qwen2_5_vl_dpo.json
 ```
 
-The expected LLaMA-Factory dataset row is `qwen2_5_vl_dpo_local_1000` and maps:
+The expected LLaMA-Factory dataset row is `qwen2_5_vl_dpo` and maps:
 
 - `instruction` -> prompt
 - `input` -> query

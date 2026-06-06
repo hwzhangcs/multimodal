@@ -25,7 +25,7 @@ from typing import Any, Iterable
 
 DEFAULT_JUDGE_MODEL = "gpt-5.4-mini"
 DEFAULT_REFINE_MODEL = "gpt-5.5"
-DEFAULT_MAX_ACCEPTED = 1000
+DEFAULT_MAX_ACCEPTED = 10000
 DEFAULT_CONFIDENCE_THRESHOLD = 0.70
 DEFAULT_REFINE_THRESHOLD = 0.78
 DEFAULT_MIN_SCORE_GAP = 1.0
@@ -107,8 +107,8 @@ def parse_args() -> argparse.Namespace:
         description="Create LLaMA-Factory DPO JSON from answers.jsonl using an auditable multimodal judge."
     )
     parser.add_argument("--answers", default=env_str("DPO_ANSWERS_PATH", "data/raw/answers.jsonl"), help="Input answers.jsonl path.")
-    parser.add_argument("--output", default=env_str("DPO_OUTPUT_PATH", "data/processed/qwen2_5_vl_dpo_local_1000.json"), help="Output LLaMA-Factory DPO JSON path.")
-    parser.add_argument("--audit", default=env_str("DPO_AUDIT_PATH", "data/audit/qwen2_5_vl_dpo_local_1000.audit.jsonl"), help="Audit JSONL path.")
+    parser.add_argument("--output", default=env_str("DPO_OUTPUT_PATH", "data/processed/qwen2_5_vl_dpo.json"), help="Output LLaMA-Factory DPO JSON path.")
+    parser.add_argument("--audit", default=env_str("DPO_AUDIT_PATH", "data/audit/qwen2_5_vl_dpo.audit.jsonl"), help="Audit JSONL path.")
     parser.add_argument("--sample-output", default=None, help="Optional extra small sample JSON copied from accepted rows.")
     parser.add_argument("--sample-size", type=int, default=5, help="Rows to write to --sample-output.")
     parser.add_argument("--image-root", default=".", help="Root used to resolve relative image paths for validation/API upload.")
@@ -116,7 +116,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--judge-model", default=env_str("DPO_JUDGE_MODEL", DEFAULT_JUDGE_MODEL), help="Primary multimodal judge model.")
     parser.add_argument("--refine-model", default=env_str("DPO_REFINE_MODEL", DEFAULT_REFINE_MODEL), help="Optional refinement model.")
     parser.add_argument("--enable-refine", action="store_true", default=env_bool("DPO_ENABLE_REFINE", False), help="Use refine model for low-confidence/inconsistent decisions.")
-    parser.add_argument("--max-accepted", type=int, default=env_int("DPO_MAX_ACCEPTED", DEFAULT_MAX_ACCEPTED), help="Maximum accepted DPO pairs to output; default is 1000.")
+    parser.add_argument("--max-accepted", type=int, default=env_int("DPO_MAX_ACCEPTED", DEFAULT_MAX_ACCEPTED), help="Maximum accepted DPO pairs to output; default is 10000.")
     parser.add_argument("--max-questions", type=int, default=env_int("DPO_MAX_QUESTIONS", 0), help="Maximum question groups to attempt before stopping; 0 means no cap.")
     parser.add_argument("--seed", type=int, default=env_int("DPO_SEED", 0), help="Deterministic shuffle seed.")
     parser.add_argument("--confidence-threshold", type=float, default=env_float("DPO_CONFIDENCE_THRESHOLD", DEFAULT_CONFIDENCE_THRESHOLD), help="Minimum confidence for an accepted pair.")

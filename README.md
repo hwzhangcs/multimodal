@@ -73,14 +73,13 @@ Example real run:
 
 ```bash
 pixi run python3 scripts/build_dpo_pairs.py \
-  --answers answers.jsonl \
-  --output data/processed/qwen2_5_vl_dpo_local.json \
-  --audit data/audit/qwen2_5_vl_dpo_local.audit.jsonl \
-  --judge-model gpt-5.4 \
+  --answers data/raw/answers.jsonl \
+  --output data/processed/qwen2_5_vl_dpo.json \
+  --audit data/audit/qwen2_5_vl_dpo.audit.jsonl \
+  --judge-model gpt-5.4-mini \
   --refine-model gpt-5.5 \
   --enable-refine \
-  --max-accepted 1000 \
-  --max-questions 3000 \
+  --max-accepted 10000 \
   --confidence-threshold 0.70 \
   --refine-threshold 0.80 \
   --min-score-gap 1.0 \
@@ -96,25 +95,16 @@ Useful features:
 - `--max-image-side` and `--image-jpeg-quality` shrink uploaded images to avoid request-size errors.
 - `--judge-mode mock` validates schema without spending API calls.
 
-## Current Local Dataset Built During Development
+## Final Local Dataset Artifacts
 
-A 5,059-pair local dataset was built and retained only as ignored local artifacts:
+The final local DPO dataset is retained only as ignored local artifacts:
 
 ```text
-data/processed/qwen2_5_vl_dpo_5059_54mini_54refine_recovered.json
-data/processed/qwen2_5_vl_dpo_5059_54mini_54refine_recovered_with_meta.jsonl
-data/audit/qwen2_5_vl_dpo_5059_54mini_54refine_recovered.audit.jsonl
-data/audit/qwen2_5_vl_dpo_5059_54mini_54refine_recovered.summary.json
+data/processed/qwen2_5_vl_dpo.json
+data/processed/qwen2_5_vl_dpo_with_meta.jsonl
+data/audit/qwen2_5_vl_dpo.audit.jsonl
+data/audit/qwen2_5_vl_dpo.summary.json
 ```
-
-Summary of that local run:
-
-- Total DPO pairs: 5,059
-- Schema errors: 0
-- Average confidence: 0.924364
-- Median confidence: 0.93
-- Average score gap: 6.812143
-- Median score gap: 7.4
 
 These files are intentionally ignored by git. Regenerate them with your own credentials if needed.
 
@@ -241,13 +231,13 @@ pip install -e ".[torch,metrics]"
 pip install qwen-vl-utils
 ```
 
-2. 准备好数据集（.json）放置到 data 路径下: .\LlamaFactory\data\qwen2.5-vl-3b.json
+2. 准备好数据集（.json）放置到 data 路径下: `.\LlamaFactory\data\qwen2_5_vl_dpo.json`
 3. 将 给你的图片解压缩至项目根目录下：`./LlamaFactory/images/`
-4. 注册数据集：打开 `LLaMA-Factory/data/dataset_info.json` 文件，在其中添加你的数据集信息：
+4. 注册数据集：打开 `LLaMA-Factory/data/dataset_info.json` 文件，在其中添加你的数据集信息（本仓库也提供 `pixi run register-dpo-local` 自动完成该步骤）：
 
 ```json
-  "qwen2.5_vl_3b": {
-    "file_name": "qwen2.5-vl-3b.json",
+  "qwen2_5_vl_dpo": {
+    "file_name": "qwen2_5_vl_dpo.json",
     "columns": {
       "prompt": "instruction",
       "query": "input",
@@ -280,15 +270,15 @@ pref_beta: 0.1
 pref_loss: sigmoid
 
 ### dataset
-dataset: qwen2.5_vl_3b
+dataset: qwen2_5_vl_dpo
 template: qwen2_vl
 cutoff_len: 2048
-max_samples: 100000
+max_samples: 10000
 overwrite_cache: true
 preprocessing_num_workers: 8
 
 ### output
-output_dir: saves/qwen2.5-vl-3b-lora-dpo
+output_dir: saves/qwen2_5_vl_3b_lora_dpo_local
 logging_steps: 1
 save_steps: 500000
 plot_loss: true
@@ -319,7 +309,7 @@ from safetensors.torch import load_file, save_file
 import json, os, shutil
 
 adapter_dirs = [
-    "LlamaFactory/saves/qwen2.5_vl_3b",
+    "LlamaFactory/saves/qwen2_5_vl_3b_lora_dpo_local",
     ]
 
 for adapter_dir in adapter_dirs:
@@ -344,7 +334,7 @@ for adapter_dir in adapter_dirs:
 #!/bin/bash
 
 LORA_NAME_LIST=(
-"LlamaFactory/saves/qwen2.5_vl_3b" #如果想要测试原始Qwen2.5-VL-3B-Instruct性能，这里改为""即可
+"LlamaFactory/saves/qwen2_5_vl_3b_lora_dpo_local_fixed" #如果想要测试原始Qwen2.5-VL-3B-Instruct性能，这里改为""即可
 )
 
 OUTPUT_NAME_LIST=(
