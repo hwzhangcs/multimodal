@@ -26,8 +26,8 @@ The expected LLaMA-Factory dataset row is `qwen2_5_vl_dpo_local_1000` and maps:
 
 ## Training profiles
 
-- Local RTX 4070S profile: `configs/llamafactory/train_dpo_qwen2_5_vl_local.yaml`
-- Full 8xA100 profile: `configs/llamafactory/train_dpo_qwen2_5_vl_full.yaml`
+- Local RTX 4070S profile (4-bit QLoRA, only for testing the pipeline on a 12 GB GPU): `configs/llamafactory/train_dpo_qwen2_5_vl_local.yaml`
+- Full-run profile (bf16 LoRA, the settings of the final run: 2 GPUs, effective batch 32): `configs/llamafactory/train_dpo_qwen2_5_vl_full.yaml`
 
 Both profiles preserve the assignment constraints:
 

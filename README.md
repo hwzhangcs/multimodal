@@ -38,7 +38,7 @@ This repo adds:
 - OpenAI-compatible multimodal judge pipeline for DPO pair construction.
 - Auditable preference metadata: confidence, score gap, candidate scores, reasoning, judge/refine model tags.
 - `pixi` environment/tasks for data building, LLaMA-Factory registration, training, LoRA fixup, AMBER evaluation, and result summarization.
-- Conservative local RTX 4070S and full 8×A100 LLaMA-Factory DPO profiles.
+- LLaMA-Factory DPO profiles: a local RTX 4070S profile (4-bit QLoRA, for testing the pipeline) and the full-run profile (bf16 LoRA, as used for the final results).
 - Sample preview files safe to commit.
 
 ## Important Data and Secret Policy
